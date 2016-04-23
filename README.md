@@ -1,5 +1,8 @@
-ReactDirective Extension for Twig
-=================================
+Twig ReactDirective Extension
+=============================
+
+This repository is split from `git subtree`, files and namespaces will be re-arranged later.
+
 
 Example
 
@@ -21,3 +24,6 @@ jQuery(function() {
 });
 </script>
 ```
+
+
+
