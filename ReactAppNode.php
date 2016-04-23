@@ -69,7 +69,7 @@ if (typeof __dom_ready === "undefined") {
         // use jQuery flag switch
         $this->writeEcho($compiler, "ready(function() {\n");
         if ($compiler->getEnvironment()->isDebug()) {
-            $compiler->raw("echo 'console.info(\'Initialize $appName on \$elementId:\');';\n");
+            $compiler->raw("echo \"console.info(\'Initialize $appName on \$elementId:\');\";\n");
             $compiler->raw("echo 'console.dir(';");
             $compiler->raw("echo json_encode(\$$configVarName, JSON_PRETTY_PRINT);\n");
             $compiler->raw("echo ');';");
