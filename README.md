@@ -4,6 +4,10 @@ Since ReactJS component could be renderred partially in an app, this extension
 converts reactapp directive into HTML and JavaScript.  Let you write readable
 code in your twig templates.
 
+## Install
+
+    composer require corneltek/react-directive "*"
+
 ## Usage
 
 ```php
