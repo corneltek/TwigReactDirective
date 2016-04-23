@@ -7,8 +7,27 @@ return array();
 --EXPECT--
 <div id="elementContainer"> </div>
 <script type="text/javascript">
-jQuery(function() {
+
+if (typeof __dom_ready === "undefined") {
+  function __dom_ready(cb) {
+    var d = document;
+    var hack = d.documentElement.doScroll;
+    var loaded = (hack ? /^loaded|^c/ : /^loaded|^i|^c/).test(d.readyState)
+    if (!loaded) {
+      d.addEventListener("DOMContentLoaded", function(){
+        d.removeEventListener("DOMContentLoaded", arguments.callee, false );
+        cb();
+      }, false);
+    }
+    if (loaded) {setTimeout(cb, 0);}
+  }
+}
+(function() {
+  var ready = typeof jQuery !== "undefined" ? jQuery : __dom_ready;
+ready(function() {
   var app = React.createElement(MyApp, {"title":"test title"});
   React.render(app, document.getElementById("elementContainer"));
 });
+
+})();
 </script>
