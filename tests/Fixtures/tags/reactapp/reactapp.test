@@ -1,0 +1,14 @@
+--TEST--
+assets tag
+--TEMPLATE(index.twig)--
+{% reactapp "MyApp" with { title: "test title" } on "elementContainer" %}
+--DATA--
+return array();
+--EXPECT--
+<div id="elementContainer"> </div>
+<script type="text/javascript">
+jQuery(function() {
+  var app = React.createElement(MyApp, {"title":"test title"});
+  React.render(app, document.getElementById("elementContainer"));
+});
+</script>

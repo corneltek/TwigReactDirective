@@ -9,9 +9,7 @@
     },
     "license": "MIT",
     "autoload": {
-        "psr-4": {
-            "TwigReactDirective\\": "TwigReactDirective/"
-        }
+        "psr-4": { "TwigReactDirective\\": "" }
     },
     "extra": { "branch-alias": { "dev-master": "1.0.x-dev" } }
 }

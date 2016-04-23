@@ -27,25 +27,26 @@ class ReactAppNode extends Twig_Node
         $configNode = $this->getAttribute('config');
         $bindTo = $this->getAttribute('bind_to');
 
-        $compiler->raw("// ReactDirectiveExtension\n");
+        $compiler->write("// ReactDirectiveExtension\n");
 
         if ($bindTo) {
-            $compiler->raw("\$elementId = '$bindTo';\n");
+            $compiler->write("\$elementId = '$bindTo';\n");
         } else {
-            $compiler->raw("\$elementId = uniqid('$appName');\n");
+            $compiler->write("\$elementId = uniqid('$appName');\n");
         }
 
         $configVarName = $compiler->getVarName();
-        $compiler->raw("\$$configVarName = ");
+        $compiler->write("\$$configVarName = ");
         $configNode->compile($compiler);
-        $compiler->raw(";\n");
+        $compiler->write(";\n");
 
 
         if ($bindTo) {
             // don't render react app container here
         } else {
-            $this->writeEcho($compiler, "<div id=\"{\$elementId}\"> </div>\n");
         }
+
+        $this->writeEcho($compiler, "<div id=\"{\$elementId}\"> </div>\n");
         $this->writeEcho($compiler, "<script type=\"text/javascript\">\n");
         $this->writeEcho($compiler, "jQuery(function() {\n");
 
@@ -56,14 +57,18 @@ class ReactAppNode extends Twig_Node
             $compiler->raw("echo ');';");
         }
 
-        $this->writeEcho($compiler, "var app = React.createElement($appName, ");
+        $this->writeEcho($compiler, "  var app = React.createElement($appName, ");
 
-        $compiler->raw("echo json_encode(\$$configVarName, JSON_PRETTY_PRINT);\n");
+        if ($compiler->getEnvironment()->isDebug()) {
+            $compiler->raw("echo json_encode(\$$configVarName, JSON_PRETTY_PRINT);\n");
+        } else {
+            $compiler->raw("echo json_encode(\$$configVarName);\n");
+        }
 
         $this->writeEcho($compiler, ");\n");
        
         // React.render(app, document.getElementById('{{eid}}'));
-        $this->writeEcho($compiler, "   React.render(app, document.getElementById(\"{\$elementId}\"));\n");
+        $this->writeEcho($compiler, "  React.render(app, document.getElementById(\"{\$elementId}\"));\n");
 
         $this->writeEcho($compiler, "});\n");
         $this->writeEcho($compiler, "</script>\n");
