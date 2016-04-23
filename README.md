@@ -6,7 +6,7 @@ code in your twig templates.
 
 ## Install
 
-    composer require corneltek/react-directive "*"
+    composer require corneltek/twig-react-directive "*"
 
 ## Usage
 
