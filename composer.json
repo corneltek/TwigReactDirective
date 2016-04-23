@@ -1,0 +1,17 @@
+{
+    "name": "corneltek/react-directive",
+    "require": {
+        "php": ">=5.4.0"
+    },
+    "require-dev": {
+        "twig/twig": "^1.23",
+        "satooshi/php-coveralls": "^1"
+    },
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "TwigReactDirective\\": "TwigReactDirective/"
+        }
+    },
+    "extra": { "branch-alias": { "dev-master": "1.0.x-dev" } }
+}
