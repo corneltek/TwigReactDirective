@@ -1,5 +1,5 @@
 <?php
-namespace Phifty\TwigExtensions\ReactDirective;
+namespace TwigReactDirective;
 use Twig_Extension;
 use AssetKit\AssetConfig;
 use AssetKit\AssetLoader;

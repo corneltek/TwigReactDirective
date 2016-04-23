@@ -1,5 +1,5 @@
 <?php
-namespace Phifty\TwigExtensions\ReactDirective;
+namespace TwigReactDirective;
 use Twig_TokenParser;
 use Twig_Token;
 use Twig_Node_Expression_Constant;

@@ -1,13 +1,19 @@
 Twig ReactDirective Extension
 =============================
-Since react component could be renderred partially in an app, this extension
+Since ReactJS component could be renderred partially in an app, this extension
 converts reactapp directive into HTML and JavaScript.  Let you write readable
 code in your twig templates.
 
-(This repository is split from `git subtree`, files and namespaces will be
-re-arranged later, PRs welcome).
+## Usage
 
-Example
+```php
+use TwigReactDirective\ReactDirectiveExtension;
+
+$twig = new Twig_Environment($loader);
+$twig->addExtension(new ReactDirectiveExtension);
+```
+
+## Template Example
 
 ```twig
 {% reactapp MyApp with { title: 'Todo List' , items: [ ... ] } %}
