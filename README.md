@@ -20,10 +20,10 @@ $twig->addExtension(new ReactDirectiveExtension);
 ## Template Example
 
 ```twig
-{% reactapp MyApp with { title: 'Todo List' , items: [ ... ] } %}
+{% reactapp "MyApp" with { title: 'Todo List' , items: [ ... ] } %}
 
 {% set config = { ... } %}
-{% reactapp MyApp with config %}
+{% reactapp "MyApp" with config %}
 ```
 
 The code above outputs:
