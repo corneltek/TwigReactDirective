@@ -40,7 +40,6 @@ class ReactAppNode extends Twig_Node
         $configNode->compile($compiler);
         $compiler->write(";\n");
 
-
         if ($bindTo) {
             // don't render react app container here
         } else {
@@ -48,7 +47,19 @@ class ReactAppNode extends Twig_Node
 
         $this->writeEcho($compiler, "<div id=\"{\$elementId}\"> </div>\n");
         $this->writeEcho($compiler, "<script type=\"text/javascript\">\n");
-        $this->writeEcho($compiler, "jQuery(function() {\n");
+
+        $compiler->raw('echo \'
+if (typeof __dom_ready === "undefined") {
+  function __dom_ready(cb) {
+    document.addEventListener("DOMContentLoaded", function(){
+      document.removeEventListener("DOMContentLoaded", arguments.callee, false );
+      cb();
+    }, false);
+  }
+}
+\';');
+
+        $this->writeEcho($compiler, "__dom_ready(function() {\n");
 
         if ($compiler->getEnvironment()->isDebug()) {
             $compiler->raw("echo 'console.info(\'Initialize $appName on \$elementId:\');';\n");
