@@ -51,16 +51,23 @@ class ReactAppNode extends Twig_Node
         $compiler->raw('echo \'
 if (typeof __dom_ready === "undefined") {
   function __dom_ready(cb) {
-    document.addEventListener("DOMContentLoaded", function(){
-      document.removeEventListener("DOMContentLoaded", arguments.callee, false );
-      cb();
-    }, false);
+    var d = document;
+    var hack = d.documentElement.doScroll;
+    var loaded = (hack ? /^loaded|^c/ : /^loaded|^i|^c/).test(d.readyState)
+    if (!loaded) {
+      d.addEventListener("DOMContentLoaded", function(){
+        d.removeEventListener("DOMContentLoaded", arguments.callee, false );
+        cb();
+      }, false);
+    }
+    if (loaded) {setTimeout(cb, 0);}
   }
 }
+(function() {
+  var ready = typeof jQuery !== "undefined" ? jQuery : __dom_ready;
 \';');
-
-        $this->writeEcho($compiler, "__dom_ready(function() {\n");
-
+        // use jQuery flag switch
+        $this->writeEcho($compiler, "ready(function() {\n");
         if ($compiler->getEnvironment()->isDebug()) {
             $compiler->raw("echo 'console.info(\'Initialize $appName on \$elementId:\');';\n");
             $compiler->raw("echo 'console.dir(';");
@@ -77,11 +84,16 @@ if (typeof __dom_ready === "undefined") {
         }
 
         $this->writeEcho($compiler, ");\n");
-       
+
         // React.render(app, document.getElementById('{{eid}}'));
         $this->writeEcho($compiler, "  React.render(app, document.getElementById(\"{\$elementId}\"));\n");
 
-        $this->writeEcho($compiler, "});\n");
+        $this->writeEcho($compiler, "});\n"); // end of __dom_ready
+
+
+        $compiler->raw('echo \'
+})();
+\';');
         $this->writeEcho($compiler, "</script>\n");
     }
 }
