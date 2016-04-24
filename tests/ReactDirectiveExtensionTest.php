@@ -1,5 +1,6 @@
 <?php
 use TwigReactDirective\ReactDirectiveExtension;
+use PJSON\PJSONEncoder;
 
 class AssetObject extends PHPUnit_Framework_TestCase {
     // dirty hack
@@ -12,7 +13,9 @@ class ReactDirectiveExtensionTest extends Twig_Test_IntegrationTestCase
 
     public function getExtensions()
     {
+        $encoder = new PJSONEncoder;
         $extension = new ReactDirectiveExtension();
+        $extension->setJsonEncoder($encoder);
         return array(new Twig_Extension_Debug(), $extension);
     }
 
