@@ -29,6 +29,9 @@ class ReactAppNode extends Twig_Node
 
         $compiler->write("// ReactDirectiveExtension\n");
 
+        $compiler->raw("\$extension = \$this->env->getExtension('ReactDirective');\n");
+        $compiler->raw("\$jsonEncoder = \$extension->getJsonEncoder();");
+
         if ($bindTo) {
             $compiler->write("\$elementId = '$bindTo';\n");
         } else {
@@ -71,16 +74,16 @@ if (typeof __dom_ready === "undefined") {
         if ($compiler->getEnvironment()->isDebug()) {
             $compiler->raw("echo \"console.info(\'Initialize $appName on \$elementId:\');\";\n");
             $compiler->raw("echo 'console.dir(';");
-            $compiler->raw("echo json_encode(\$$configVarName, JSON_PRETTY_PRINT);\n");
+            $compiler->raw("echo \$jsonEncoder ? \$jsonEncoder->encode(\$$configVarName) : json_encode(\$$configVarName, JSON_PRETTY_PRINT);");
             $compiler->raw("echo ');';");
         }
 
         $this->writeEcho($compiler, "  var app = React.createElement($appName, ");
 
         if ($compiler->getEnvironment()->isDebug()) {
-            $compiler->raw("echo json_encode(\$$configVarName, JSON_PRETTY_PRINT);\n");
+            $compiler->raw("echo \$jsonEncoder ? \$jsonEncoder->encode(\$$configVarName) : json_encode(\$$configVarName, JSON_PRETTY_PRINT);");
         } else {
-            $compiler->raw("echo json_encode(\$$configVarName);\n");
+            $compiler->raw("echo \$jsonEncoder ? \$jsonEncoder->encode(\$$configVarName) : json_encode(\$$configVarName);");
         }
 
         $this->writeEcho($compiler, ");\n");

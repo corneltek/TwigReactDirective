@@ -8,8 +8,20 @@ use AssetKit\AssetCompiler;
 
 class ReactDirectiveExtension extends Twig_Extension
 {
+    protected $jsonEncoder;
+
     public function __construct()
     {
+    }
+
+    public function setJsonEncoder($encoder)
+    {
+        $this->jsonEncoder = $encoder;
+    }
+
+    public function getJsonEncoder()
+    {
+        return $this->jsonEncoder;
     }
 
     /**
