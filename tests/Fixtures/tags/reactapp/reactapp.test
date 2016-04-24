@@ -1,5 +1,5 @@
 --TEST--
-assets tag
+reactapp tag
 --TEMPLATE(index.twig)--
 {% reactapp "MyApp" with { title: "test title" } on "elementContainer" %}
 --DATA--

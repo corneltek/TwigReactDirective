@@ -2,7 +2,7 @@
     "name": "corneltek/twig-react-directive",
     "require": {
         "php": ">=5.4.0",
-        "corneltek/pjson": "*"
+        "corneltek/pjson": "^1"
     },
     "require-dev": {
         "twig/twig": "^1.23",
