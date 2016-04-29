@@ -89,7 +89,7 @@ if (typeof __dom_ready === "undefined") {
         $this->writeEcho($compiler, ");\n");
 
         // React.render(app, document.getElementById('{{eid}}'));
-        $this->writeEcho($compiler, "  React.render(app, document.getElementById(\"{\$elementId}\"));\n");
+        $this->writeEcho($compiler, "  ReactDOM.render(app, document.getElementById(\"{\$elementId}\"));\n");
 
         $this->writeEcho($compiler, "});\n"); // end of __dom_ready
 
