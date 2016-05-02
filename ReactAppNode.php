@@ -16,7 +16,7 @@ class ReactAppNode extends Twig_Node
         parent::__construct(array(), $attributes, $lineno, $tag);
     }
 
-    protected function writeEcho($compiler, $str)
+    protected function writeEcho(Twig_Compiler $compiler, $str)
     {
         $compiler->raw('echo "' . addslashes($str) . '";' . PHP_EOL);
     }
