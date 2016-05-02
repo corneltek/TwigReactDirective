@@ -22,8 +22,10 @@ class ReactDirectiveParser extends Twig_TokenParser
             'config' => [],
         ];
 
-        $token = $stream->expect(Twig_Token::STRING_TYPE);
-        $attributes['reactapp'] = $token->getValue();
+        $node = $this->parser
+            ->getExpressionParser()
+            ->parseExpression();
+        $attributes['reactapp'] = $node;
 
         while (!$stream->test(Twig_Token::BLOCK_END_TYPE)) {
             if ($stream->test(Twig_Token::NAME_TYPE, 'with')) {

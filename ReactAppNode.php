@@ -2,10 +2,11 @@
 namespace TwigReactDirective;
 use Twig_Node;
 use Twig_Compiler;
+use Twig_Token;
 use Twig_Node_Expression;
+use Twig_Node_Expression_Name;
 use Twig_Node_Expression_Array;
 use Twig_Node_Expression_Constant;
-use Twig_Node_Expression_Name;
 use Twig_Node_Expression_GetAttr;
 
 class ReactAppNode extends Twig_Node
@@ -23,7 +24,7 @@ class ReactAppNode extends Twig_Node
     public function compile(Twig_Compiler $compiler)
     {
         $compiler->addDebugInfo($this);
-        $appName = $this->getAttribute('reactapp');
+        $appNameNode = $this->getAttribute('reactapp');
         $configNode = $this->getAttribute('config');
         $bindTo = $this->getAttribute('bind_to');
 
@@ -32,10 +33,17 @@ class ReactAppNode extends Twig_Node
         $compiler->raw("\$extension = \$this->env->getExtension('ReactDirective');\n");
         $compiler->raw("\$jsonEncoder = \$extension->getJsonEncoder();");
 
+        $appVarName = $compiler->getVarName();
+        $compiler->write("\$$appVarName = ");
+        $appNameNode->compile($compiler);
+        $compiler->write(";\n");
+
+
+
         if ($bindTo) {
             $compiler->write("\$elementId = '$bindTo';\n");
         } else {
-            $compiler->write("\$elementId = uniqid('$appName');\n");
+            $compiler->write("\$elementId = uniqid(\$$appVarName);\n");
         }
 
         $configVarName = $compiler->getVarName();
@@ -72,13 +80,13 @@ if (typeof __dom_ready === "undefined") {
         // use jQuery flag switch
         $this->writeEcho($compiler, "ready(function() {\n");
         if ($compiler->getEnvironment()->isDebug()) {
-            $compiler->raw("echo \"console.info('Initialize $appName on \$elementId:');\";\n");
+            $compiler->raw("echo \"console.info('Initialize \$$appVarName on \$elementId:');\";\n");
             $compiler->raw("echo 'console.dir(';");
             $compiler->raw("echo \$jsonEncoder ? \$jsonEncoder->encode(\$$configVarName) : json_encode(\$$configVarName, JSON_PRETTY_PRINT);");
             $compiler->raw("echo ');';");
         }
 
-        $this->writeEcho($compiler, "  var app = React.createElement($appName, ");
+        $this->writeEcho($compiler, "  var app = React.createElement(\$$appVarName, ");
 
         if ($compiler->getEnvironment()->isDebug()) {
             $compiler->raw("echo \$jsonEncoder ? \$jsonEncoder->encode(\$$configVarName) : json_encode(\$$configVarName, JSON_PRETTY_PRINT);");
