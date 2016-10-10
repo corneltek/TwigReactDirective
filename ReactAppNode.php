@@ -30,7 +30,7 @@ class ReactAppNode extends Twig_Node
 
         $compiler->write("// ReactDirectiveExtension\n");
 
-        $compiler->raw("\$extension = \$this->env->getExtension('ReactDirective');\n");
+        $compiler->raw("\$extension = \$this->env->getExtension('TwigReactDirective\\ReactDirectiveExtension');\n");
         $compiler->raw("\$jsonEncoder = \$extension->getJsonEncoder();");
 
         $appVarName = $compiler->getVarName();
