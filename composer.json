@@ -5,7 +5,7 @@
         "corneltek/pjson": "^1"
     },
     "require-dev": {
-        "twig/twig": "^1.23",
+        "twig/twig": "^1.26",
         "satooshi/php-coveralls": "^1"
     },
     "license": "MIT",
